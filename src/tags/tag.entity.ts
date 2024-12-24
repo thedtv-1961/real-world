@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { Article } from 'src/articles/article.entity';
+import { Article } from '../articles/article.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToMany, Index } from 'typeorm';
 
 @Entity({ name: 'tags' })

@@ -1,4 +1,4 @@
-import { Article } from 'src/articles/article.entity';
+import { Article } from '../articles/article.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToMany, OneToMany } from 'typeorm';
 import { Comment } from './comment.entity';
 import { UserFollow } from './user_follow.entity';

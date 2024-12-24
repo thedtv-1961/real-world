@@ -27,3 +27,14 @@ docker-compose up -d
 docker-compose build
 docker-compose up -d
 ```
+
+# Seeder
+# create seed file
+```
+npm run seed:create -- --name=TagSeeder
+```
+
+# run seeder files
+```
+npm run seed:run
+```
