@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Headers, Put } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Put, UseGuards } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { CreateUserResponseDto } from 'src/users/dto/create-user-response.dto';
 import { ProfileService } from './profile.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @ApiSecurity('custom-token')
 @ApiTags('user')
@@ -42,6 +43,7 @@ export class ProfileController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Get('')
     async profile(@Headers() header): Promise<any> {
         const result = await this.profileService.detail(header);
@@ -95,6 +97,7 @@ export class ProfileController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Put('')
     async update(@Headers() header, @Body() body: UpdateUserDto): Promise<any> {
         const user = await this.profileService.update(header, body);

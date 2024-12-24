@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Headers, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { ArticlesService } from './articles.service';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @ApiSecurity('custom-token')
 @ApiTags('articles')
@@ -70,6 +71,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Get('feed')
     async feed(
         @Headers() headers,
@@ -138,6 +140,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Post('')
     async create(@Headers() headers, @Body() articleDto: CreateArticleDto): Promise<any> {
         const result = await this.articlesService.create(headers, articleDto);
@@ -198,6 +201,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Put(':slug')
     async update(@Headers() headers, @Param('slug') slug: string, @Body() articleDto: UpdateArticleDto): Promise<any> {
         const result = await this.articlesService.update(headers, slug, articleDto);
@@ -241,6 +245,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Delete(':slug')
     async delete(@Headers() headers, @Param('slug') slug: string): Promise<any> {
         const result = await this.articlesService.delete(headers, slug);
@@ -427,6 +432,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Post(':slug/comments')
     async createComment(@Headers() headers, @Param('slug') slug: string, @Body() commentDto: CreateCommentDto): Promise<any> {
         const result = await this.articlesService.createComment(headers, slug, commentDto);
@@ -513,6 +519,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Delete(':slug/comments/:id')
     async removeComment(@Headers() headers, @Param('slug') slug: string, @Param('id') id: number): Promise<any> {
         const result = await this.articlesService.deleteComment(headers, slug, id);
@@ -567,6 +574,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Post(':slug/favorite')
     async favorite(@Headers() headers, @Param('slug') slug: string): Promise<any> {
         const result = await this.articlesService.favorite(headers, slug);
@@ -615,6 +623,7 @@ export class ArticlesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Delete(':slug/favorite')
     async unfavorite(@Headers() headers, @Param('slug') slug: string): Promise<any> {
         const result = await this.articlesService.unfavorite(headers, slug);

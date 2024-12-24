@@ -1,6 +1,7 @@
-import { Controller, Delete, Get, Headers, Param, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Headers, Param, Post, UseGuards } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { ApiOperation, ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @ApiSecurity('custom-token')
 @ApiTags('profiles')
@@ -75,6 +76,7 @@ export class ProfilesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Post('/:username/follow')
     async follow(@Headers() headers, @Param('username') username: string): Promise<any> {
         const profile = await this.profileService.follow(headers, username);
@@ -112,6 +114,7 @@ export class ProfilesController {
             },
         },
     })
+    @UseGuards(AuthGuard)
     @Delete('/:username/follow')
     async unfollow(@Headers() headers, @Param('username') username: string): Promise<any> {
         const profile = await this.profileService.unfollow(headers, username);
